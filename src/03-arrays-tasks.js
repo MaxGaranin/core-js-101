@@ -7,7 +7,6 @@
  *                                                                                            *
  ******************************************************************************************** */
 
-
 /**
  * Returns an index of the specified element in array or -1 if element is not found
  *
@@ -39,7 +38,6 @@ function generateOdds(len) {
   return Array.from({ length: len }, (_, i) => i * 2 + 1);
 }
 
-
 /**
  * Returns the doubled array - elements of the specified array
  * are repeated twice using original order
@@ -55,7 +53,6 @@ function generateOdds(len) {
 function doubleArray(arr) {
   return arr.concat(arr);
 }
-
 
 /**
  * Returns an array of positive numbers from the specified array in original order
@@ -119,7 +116,6 @@ function getUpperCaseStrings(arr) {
   return arr.map((value) => value.toUpperCase());
 }
 
-
 /**
  * Returns the array of string lengths from the specified string array.
  *
@@ -163,7 +159,6 @@ function getHead(arr, n) {
   return arr.slice(0, n);
 }
 
-
 /**
  * Returns the n last items of the specified array
  *
@@ -177,7 +172,6 @@ function getHead(arr, n) {
 function getTail(arr, n) {
   return arr.slice(-n);
 }
-
 
 /**
  * Returns CSV represebtation of two-dimentional numeric array.
@@ -220,7 +214,6 @@ function toArrayOfSquares(arr) {
   return arr.map((value) => value ** 2);
 }
 
-
 /**
  * Transforms the numeric array to the according moving sum array:
  *     f[n] = x[0] + x[1] + x[2] +...+ x[n]
@@ -258,7 +251,6 @@ function getSecondItems(arr) {
   return arr.filter((value, index) => (index + 1) % 2 === 0);
 }
 
-
 /**
  * Propagates every item in sequence its position times
  * Returns an array that consists of: one first item, two second items, tree third items etc.
@@ -279,7 +271,6 @@ function propagateItemsByPositionIndex(arr) {
     .reduce((acc, current) => acc.concat(current), []);
 }
 
-
 /**
  * Returns the 3 largest numbers from the specified array
  *
@@ -299,7 +290,6 @@ function get3TopItems(arr) {
   return copy.slice(-3).reverse();
 }
 
-
 /**
  * Returns the number of positive numbers from specified array
  *
@@ -314,7 +304,10 @@ function get3TopItems(arr) {
  *   [ 1, '2' ] => 1
  */
 function getPositivesCount(arr) {
-  return arr.reduce((acc, current) => ((typeof current === 'number') && current > 0 ? acc + 1 : acc), 0);
+  return arr.reduce(
+    (acc, current) => (typeof current === 'number' && current > 0 ? acc + 1 : acc),
+    0,
+  );
 }
 
 /**
@@ -412,7 +405,6 @@ function toStringList(arr) {
   return arr.join(',');
 }
 
-
 /**
  * Sorts the specified array by country name first and city name
  * (if countries are equal) in ascending order.
@@ -439,8 +431,14 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country === b.country) {
+      return (a.city < b.city) ? -1 : 1;
+    }
+
+    return (a.country < b.country) ? -1 : 1;
+  });
 }
 
 /**
@@ -461,8 +459,10 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return Array.from({ length: n },
+    (_, i) => Array.from({ length: n },
+      (__, j) => (j === i ? 1 : 0)));
 }
 
 /**
@@ -478,8 +478,9 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  return Array.from({ length: end - start + 1 },
+    (_, i) => start + i);
 }
 
 /**
@@ -493,8 +494,8 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  return [...new Set(arr)];
 }
 
 /**
@@ -528,9 +529,8 @@ function distinct(/* arr */) {
  *   }
  */
 function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+  // const keys = array.map(keySelector).distinct();
 }
-
 
 /**
  * Projects each element of the specified array to a sequence
@@ -549,7 +549,6 @@ function selectMany(/* arr, childrenSelector */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns an element from the multidimentional array by the specified indexes.
  *
@@ -565,7 +564,6 @@ function selectMany(/* arr, childrenSelector */) {
 function getElementByIndexes(/* arr, indexes */) {
   throw new Error('Not implemented');
 }
-
 
 /**
  * Swaps the head and tail of the specified array:
@@ -588,7 +586,6 @@ function getElementByIndexes(/* arr, indexes */) {
 function swapHeadAndTail(/* arr */) {
   throw new Error('Not implemented');
 }
-
 
 module.exports = {
   findElement,
