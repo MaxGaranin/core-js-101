@@ -529,7 +529,11 @@ function distinct(arr) {
  *   }
  */
 function group(/* array, keySelector, valueSelector */) {
+  throw new Error('Not implemented');
   // const keys = array.map(keySelector).distinct();
+  // keys.map((key) => {
+  //   const countries = array.filter((item) => item.country === key);
+  // })
 }
 
 /**
