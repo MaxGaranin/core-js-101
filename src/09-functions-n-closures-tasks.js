@@ -23,8 +23,10 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.asin(x))
  *
  */
-function getComposition(/* f, g */) {
-  throw new Error('Not implemented');
+function getComposition(f, g) {
+  return function func(...args) {
+    return f(g(...args));
+  };
 }
 
 
@@ -44,8 +46,10 @@ function getComposition(/* f, g */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  return function func(num) {
+    return num ** exponent;
+  };
 }
 
 
@@ -62,8 +66,22 @@ function getPowerFunction(/* exponent */) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(a, b, c) {
+  return function func(x) {
+    if (c) {
+      return a * x ** 2 + b * x + c;
+    }
+
+    if (b) {
+      return a * x + b;
+    }
+
+    if (a) {
+      return a;
+    }
+
+    return null;
+  };
 }
 
 
@@ -81,8 +99,15 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  let cache;
+  return function f(...args) {
+    if (!cache) {
+      cache = func(...args);
+    }
+
+    return cache;
+  };
 }
 
 
@@ -101,8 +126,18 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return function f(...args) {
+    let i = 0;
+    while (i <= attempts) {
+      try {
+        return func(...args);
+      } catch (err) {
+        i += 1;
+      }
+    }
+    return null;
+  };
 }
 
 
@@ -131,6 +166,12 @@ function retry(/* func, attempts */) {
  */
 function logger(/* func, logFunc */) {
   throw new Error('Not implemented');
+  // return function f(...args) {
+  //   logFunc(`${func.name}(${args}) starts`);
+  //   const result = func(...args);
+  //   logFunc(`${func.name}(${args}) ends`);
+  //   return result;
+  // };
 }
 
 
