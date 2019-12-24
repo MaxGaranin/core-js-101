@@ -59,6 +59,12 @@ function isLeapYear(date) {
 }
 
 
+function tz(value, count) {
+  // eslint-disable-next-line no-param-reassign
+  if (!count) count = 2;
+  return ('0'.repeat(count - 1) + value).slice(-count);
+}
+
 /**
  * Returns the string represention of the timespan between two dates.
  * The format of output string is "HH:mm:ss.sss"
@@ -74,11 +80,15 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
-  // return new Date(endDate - startDate).toTimeString();
+function timeSpanToString(startDate, endDate) {
+  const diff = new Date(endDate - startDate);
+  const hours = diff.getUTCHours();
+  const minutes = diff.getUTCMinutes();
+  const seconds = diff.getUTCSeconds();
+  const ms = diff.getUTCMilliseconds();
+  const str = `${tz(hours)}:${tz(minutes)}:${tz(seconds)}.${tz(ms, 3)}`;
+  return str;
 }
-
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock
@@ -94,8 +104,19 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  let h = date.getUTCHours();
+  if (h > 11) h -= 12;
+  const m = date.getUTCMinutes();
+
+  const hAngle = 0.5 * (h * 60 + m);
+  const mAngle = 6 * m;
+  let angle = Math.abs(hAngle - mAngle);
+  angle = Math.min(angle, 360 - angle);
+
+  const radianInDegrees = Math.PI / 180;
+  angle *= radianInDegrees;
+  return angle;
 }
 
 
